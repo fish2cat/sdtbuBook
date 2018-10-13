@@ -1,4 +1,8 @@
 package cn.edu.sdtbu.book;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Contract extends Object{
 	private String name;
 	private String gender;
@@ -26,10 +30,11 @@ public class Contract extends Object{
 		System.out.println();
 	}
 	public static void main(String[] args) throws Exception{
-		Contract c = new Contract("李浩","男","liH@sdebu.edu.cn",
-				new String[]{"13234567890","13545671234"});
-		c.display();
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = sdf.parse("1999-12-02");
+		Contract c = new Family("李明","男","Li@163.com",
+				new String[]{"13212341111"},d,"山东烟台");
+		c.display();		
 	}	
 	public String getName() {
 		return name;
