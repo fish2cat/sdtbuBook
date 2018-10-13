@@ -1,5 +1,6 @@
 package cn.edu.sdtbu.book;
 
+import java.text.Collator;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -8,6 +9,15 @@ public class Contract extends Object{
 	private String gender;
 	private String email;
 	private String[] phones;	
+	public int compareTo(Contract c){
+		//unicode±àÂë
+		//return this.getName().compareTo(c.getName());
+		Collator instance = Collator.getInstance(java.util.Locale.CHINA);
+		return  instance.compare(this.getName(),c.getName());
+	}
+	public void mergeContract(Contract c){
+		
+	}
 	public Contract(){		
 	}	
 	public Contract(String name, String[] phones){
