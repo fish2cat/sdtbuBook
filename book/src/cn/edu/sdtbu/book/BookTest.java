@@ -8,6 +8,17 @@ public class BookTest {
 							new Contract("Tommy", new String[]{"555","666"})};
 		Book book = new Book(cons);
 		book.displayBook();
+		
+		book.add(new Contract("王小二","男","wangxiaoer@163.com", 
+				new String[]{"111","222","333"}));
+		book.displayBook();
+		
+		for(Contract c:book.findContractsByName("小"))
+			c.display();
+		
+		book.updateContract("王小二","女","wangxiaoer@163.com", 
+				new String[]{"555","666"});
+		book.displayBook();
 	}
 
 }

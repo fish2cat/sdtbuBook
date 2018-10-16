@@ -1,14 +1,12 @@
 package cn.edu.sdtbu.book;
-
-import java.text.Collator;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import java.text.*;
+import java.util.*;
 public class Contract extends Object{
 	private String name;
 	private String gender;
 	private String email;
 	private String[] phones;	
+	
 	public int compareTo(Contract c){
 		//unicode编码
 		//return this.getName().compareTo(c.getName());
@@ -16,7 +14,34 @@ public class Contract extends Object{
 		return  instance.compare(this.getName(),c.getName());
 	}
 	public void mergeContract(Contract c){
-		
+		if(this.getName().equals(c.getName())) {
+			if(this.getGender().equals(""))
+				this.setGender(c.getGender());
+			if(this.getEmail().equals(""))
+				this.setEmail(c.getEmail());
+			//合并phone
+			boolean flag;
+			String[] newPhones = new String[c.getPhones().length];
+			int count = 0;
+			for(int j = 0; j < c.getPhones().length; j++) {
+				flag = true;
+				for(int i = 0; i < this.getPhones().length; i++) {
+					if(c.getPhones()[j].equals(this.getPhones()[i])) {
+						flag = false;
+						break;
+					}
+				}		
+				if(flag) 
+				{				
+					newPhones[count++] = c.getPhones()[j];
+				}				
+			}
+			int position = phones.length;
+			//扩容
+			phones = Arrays.copyOf(phones, phones.length+count);			
+			//newPhones追加在当前phones后面
+			System.arraycopy(newPhones, 0, phones, position, count);			
+		}
 	}
 	public Contract(){		
 	}	

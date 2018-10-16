@@ -1,9 +1,8 @@
 package cn.edu.sdtbu.book;
-
 import java.util.Arrays;
-
 public class Book {
 	private Contract[] contracts;
+	
 	public Contract[] getContracts() {
 		return contracts;
 	}
@@ -16,7 +15,7 @@ public class Book {
 		this.setContracts(contracts);
 	}
 	public Book() {		
-	}
+	}	
 	private void sortContracts(){
 		for(int i = 0; i < contracts.length-1; i++){
 			int temp = i;
@@ -60,6 +59,27 @@ public class Book {
 				contracts[index].mergeContract(c);
 			}
 		}
+	}
+	public Contract[] findContractsByName(String name){
+		Contract[] result = new Contract[contracts.length];
+		int num = 0;
+		for(int i = 0; i < contracts.length; i++) {
+			if(contracts[i].getName().contains(name))
+				result[num++] = contracts[i];			
+		}
+		return Arrays.copyOf(result, num);
+	}
+	public boolean updateContract(String name, String gender, String email, String[] phones){
+		int index = findContract(new Contract(name,gender,email,phones));		
+		if(index <0)
+			return false;
+		contracts[index].setGender(gender);
+		contracts[index].setEmail(email);
+		contracts[index].setPhones(phones);
+		return true;
+	}
+	public void clearContracts() {
+		contracts = null;
 	}
 }
 
