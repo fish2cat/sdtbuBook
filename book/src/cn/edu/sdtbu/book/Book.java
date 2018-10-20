@@ -42,7 +42,7 @@ public class Book {
 		}
 		return -1;			
 	}
-	public void add(Contract c){	
+	public void add(Contract c) throws GenderException{	
 		if(contracts == null){
 			//¿ÕÍ¨Ñ¶Â¼
 			contracts = new Contract[1];
@@ -69,7 +69,7 @@ public class Book {
 		}
 		return Arrays.copyOf(result, num);
 	}
-	public boolean updateContract(String name, String gender, String email, String[] phones){
+	public boolean updateContract(String name, String gender, String email, String[] phones) throws GenderException{
 		int index = findContract(new Contract(name,gender,email,phones));		
 		if(index <0)
 			return false;

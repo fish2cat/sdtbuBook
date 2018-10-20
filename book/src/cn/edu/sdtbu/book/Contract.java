@@ -1,6 +1,16 @@
 package cn.edu.sdtbu.book;
 import java.text.*;
 import java.util.*;
+class NameException extends Exception{
+	public NameException(){
+		super("姓名为空");
+	}
+}
+class GenderException extends Exception{
+	public GenderException(){
+		super("性别错误");
+	}
+}
 public class Contract extends Object{
 	private String name;
 	private String gender;
@@ -13,7 +23,7 @@ public class Contract extends Object{
 		Collator instance = Collator.getInstance(java.util.Locale.CHINA);
 		return  instance.compare(this.getName(),c.getName());
 	}
-	public void mergeContract(Contract c){
+	public void mergeContract(Contract c) throws GenderException{
 		if(this.getName().equals(c.getName())) {
 			if(this.getGender().equals(""))
 				this.setGender(c.getGender());
@@ -48,10 +58,17 @@ public class Contract extends Object{
 	public Contract(String name, String[] phones){
 		this(name,"","",phones);
 	}
-	public Contract(String name, String gender, String email, String[] phones) {
+	public Contract(String name, String gender, String email, String[] phones){
 		super();
-		this.setName(name);
-		this.setGender(gender);
+		try {
+			this.setName(name);
+			this.setGender(gender);
+		} catch (NameException e) {
+			e.printStackTrace();
+		} catch (GenderException e) {
+			System.out.println(e.getMessage());
+		}
+		
 		this.setEmail(email);
 		this.setPhones(phones);
 	}
@@ -67,23 +84,27 @@ public class Contract extends Object{
 	public static void main(String[] args) throws Exception{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date d = sdf.parse("1999-12-02");
-		Contract c = new Family("李明","男","Li@163.com",
+		Contract c = new Family("李明","","Li@163.com",
 				new String[]{"13212341111"},d,"山东烟台");
 		c.display();		
 	}	
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(String name) throws NameException {
 		if(name == null || name.equals(""))
-			return;
+			throw new NameException();
 		this.name = name;
+	}	
+	public void setGender(String gender) throws GenderException {
+		if(gender == null || 
+				!(gender.equals("男") || gender.equals("女")
+						|| gender.equals("")))
+			throw new GenderException();
+		this.gender = gender;
 	}
 	public String getGender() {
 		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
 	}
 	public String getEmail() {
 		return email;
