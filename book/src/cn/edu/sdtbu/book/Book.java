@@ -35,7 +35,7 @@ public class Book {
 		for(Contract c:this.getContracts())
 			c.display();
 	}
-	private int findContract(Contract c){
+	public int findContract(Contract c){
 		for(int i = 0; i < contracts.length;i++){
 			if(contracts[i].getName().equals(c.getName()))
 				return i;
@@ -80,6 +80,36 @@ public class Book {
 	}
 	public void clearContracts() {
 		contracts = null;
+	}
+	public boolean deleteVal(Contract c){
+		int index = findContract(c);
+		if(index == -1)
+			return false;
+		//删除第index个元素
+		Contract[] contractDeleted = new Contract[contracts.length-1];		
+		System.arraycopy(contracts, 0, contractDeleted, 0, index);
+		System.arraycopy(contracts, index+1, 
+				contractDeleted, index, contracts.length-1-index);
+		contracts = contractDeleted;		
+		return true;
+	}
+	public boolean deleteRef(Contract c){
+		int index = -1;
+		for(int i = 0; i < contracts.length; i++){
+			if(contracts[i] == c){
+				index = i;
+				break;
+			}
+		}
+		if(index == -1)
+			return false;
+		//删除第index个元素
+		Contract[] contractDeleted = new Contract[contracts.length-1];		
+		System.arraycopy(contracts, 0, contractDeleted, 0, index);
+		System.arraycopy(contracts, index+1, 
+				contractDeleted, index, contracts.length-1-index);
+		contracts = contractDeleted;		
+		return true;
 	}
 }
 
