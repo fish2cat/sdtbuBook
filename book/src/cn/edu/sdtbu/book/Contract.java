@@ -11,11 +11,11 @@ class GenderException extends Exception{
 		super("性别错误");
 	}
 }
-public class Contract extends Object{
+public class Contract extends Object implements Comparable<Contract>{
 	private String name;
 	private String gender;
 	private String email;
-	private String[] phones;	
+	private List<String> phones;	
 	
 	public int compareTo(Contract c){
 		//unicode编码
@@ -30,35 +30,18 @@ public class Contract extends Object{
 			if(this.getEmail().equals(""))
 				this.setEmail(c.getEmail());
 			//合并phone
-			boolean flag;
-			String[] newPhones = new String[c.getPhones().length];
-			int count = 0;
-			for(int j = 0; j < c.getPhones().length; j++) {
-				flag = true;
-				for(int i = 0; i < this.getPhones().length; i++) {
-					if(c.getPhones()[j].equals(this.getPhones()[i])) {
-						flag = false;
-						break;
-					}
-				}		
-				if(flag) 
-				{				
-					newPhones[count++] = c.getPhones()[j];
-				}				
-			}
-			int position = phones.length;
-			//扩容
-			phones = Arrays.copyOf(phones, phones.length+count);			
-			//newPhones追加在当前phones后面
-			System.arraycopy(newPhones, 0, phones, position, count);			
+			List<String> src = this.getPhones();
+			src.removeAll(c.getPhones());
+			src.addAll(c.getPhones());
+			this.setPhones(src);		
 		}
 	}
 	public Contract(){		
 	}	
-	public Contract(String name, String[] phones){
+	public Contract(String name, List<String> phones){
 		this(name,"","",phones);
 	}
-	public Contract(String name, String gender, String email, String[] phones){
+	public Contract(String name, String gender, String email, List<String> phones){
 		super();
 		try {
 			this.setName(name);
@@ -82,11 +65,17 @@ public class Contract extends Object{
 		System.out.println();
 	}
 	public static void main(String[] args) throws Exception{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date d = sdf.parse("1999-12-02");
-		Contract c = new Family("李明","","Li@163.com",
-				new String[]{"13212341111"},d,"山东烟台");
-		c.display();		
+		List<String> phones = new ArrayList<String>();
+		phones.add("13212341111");
+		phones.add("12345678901");		
+		Contract c = new Contract("李明","","Li@163.com",phones);
+		c.display();
+		List<String> p = new ArrayList<String>();
+		p.add("13212341111");
+		p.add("13212341112");
+		Contract c1 = new Contract("李明","男","Li@163.com",p);
+		c.mergeContract(c1);
+		c.display();
 	}	
 	public String getName() {
 		return name;
@@ -112,10 +101,10 @@ public class Contract extends Object{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String[] getPhones() {
+	public List<String> getPhones() {
 		return phones;
 	}
-	public void setPhones(String[] phones) {
+	public void setPhones(List<String> phones) {
 		this.phones = phones;
 	}
 	
