@@ -16,6 +16,14 @@ public class Contract extends Object implements Comparable<Contract>{
 	private String gender;
 	private String email;
 	private List<String> phones;	
+	public boolean equals(Object o){
+		if(this == o)
+			return true;
+		if(o != null && o.getClass() == Contract.class)
+			return this.getName().equals(((Contract)o).getName());
+		else
+			return false;
+	}
 	
 	public int compareTo(Contract c){
 		//unicode±àÂë
@@ -33,7 +41,7 @@ public class Contract extends Object implements Comparable<Contract>{
 			List<String> src = this.getPhones();
 			src.removeAll(c.getPhones());
 			src.addAll(c.getPhones());
-			this.setPhones(src);		
+			//this.setPhones(src);		
 		}
 	}
 	public Contract(){		
@@ -50,8 +58,7 @@ public class Contract extends Object implements Comparable<Contract>{
 			e.printStackTrace();
 		} catch (GenderException e) {
 			System.out.println(e.getMessage());
-		}
-		
+		}		
 		this.setEmail(email);
 		this.setPhones(phones);
 	}

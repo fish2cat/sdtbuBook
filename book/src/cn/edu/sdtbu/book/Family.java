@@ -3,6 +3,7 @@ package cn.edu.sdtbu.book;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 public class Family extends Contract {
 	private Date birthday;
 	private String address;		
@@ -13,15 +14,15 @@ public class Family extends Contract {
 		System.out.println("address:"+this.getAddress());
 	}	
 	public static void main(String[] args) throws ParseException{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		/*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date d = sdf.parse("1999-12-02");
 		Family f = new Family("李明","男","Li@163.com",
 				new String[]{"13212341111"},d,"山东烟台");
-		f.display();
+		f.display();*/
 	}
 	
 	public Family(String name, String gender, String email,
-			String[] phones, Date birth, String addr) {
+			List<String> phones, Date birth, String addr) {
 		super(name, gender, email, phones);
 		this.setBirthday(birth);
 		this.setAddress(addr);

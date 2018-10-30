@@ -1,116 +1,68 @@
 package cn.edu.sdtbu.book;
-import java.util.Arrays;
+import java.util.*;
 public class Book {
-	private Contract[] contracts;
+	private List<Contract> contracts;
 	
-	public Contract[] getContracts() {
+	public List<Contract> getContracts() {
 		return contracts;
 	}
-	public void setContracts(Contract[] contracts) {
+	public void setContracts(List<Contract> contracts) {
+		Collections.sort(contracts);
 		this.contracts = contracts;
-		this.sortContracts();
+		//this.sortContracts();
 	}
-	public Book(Contract[] contracts) {
+	public Book(List<Contract> contracts) {
 		super();
 		this.setContracts(contracts);
 	}
 	public Book() {		
 	}	
-	private void sortContracts(){
-		for(int i = 0; i < contracts.length-1; i++){
-			int temp = i;
-			for(int j = i+1; j< contracts.length; j++){
-				if(contracts[temp].compareTo(contracts[j]) > 0)
-					temp = j;
-			}
-			if(temp != i){
-				//交换
-				Contract t = contracts[temp];
-				contracts[temp] = contracts[i];
-				contracts[i] = t;
-			}			
-		}
-	}
 	public void displayBook(){
 		for(Contract c:this.getContracts())
 			c.display();
-	}
-	public int findContract(Contract c){
-		for(int i = 0; i < contracts.length;i++){
-			if(contracts[i].getName().equals(c.getName()))
-				return i;
-		}
-		return -1;			
-	}
+	}	
 	public void add(Contract c) throws GenderException{	
 		if(contracts == null){
 			//空通讯录
-			contracts = new Contract[1];
-			contracts[0] = c;
+			contracts = new ArrayList<Contract>();
+			contracts.add(c);
 		}else{
-			int index = findContract(c);
-			if( index == -1){
-				//不存在的联系人
-				Contract[] contractAdded = Arrays.copyOf(contracts, contracts.length + 1);
-				contractAdded[contractAdded.length-1] = c;			
-				this.setContracts(contractAdded);
+			int index = Collections.binarySearch(this.getContracts(), c);
+			if( index < 0){
+				//不存在的联系人				
+				contracts.add(-index-1, c);
 			}else{
 				//已经存在的联系人
-				contracts[index].mergeContract(c);
+				contracts.get(index).mergeContract(c);
 			}
 		}
 	}
-	public Contract[] findContractsByName(String name){
-		Contract[] result = new Contract[contracts.length];
-		int num = 0;
-		for(int i = 0; i < contracts.length; i++) {
-			if(contracts[i].getName().contains(name))
-				result[num++] = contracts[i];			
+	public List<Contract> findContractsByName(String name){
+		List<Contract> result = new ArrayList<Contract>();
+		Iterator<Contract> iter = contracts.iterator();		
+		for(;iter.hasNext();) {	
+			Contract c = iter.next();
+			if(c.getName().contains(name))
+				result.add(c);			
 		}
-		return Arrays.copyOf(result, num);
+		return result;
 	}
-	public boolean updateContract(String name, String gender, String email, String[] phones) throws GenderException{
-		int index = findContract(new Contract(name,gender,email,phones));		
+	public boolean updateContract(String name, String gender, String email, List<String> phones) throws GenderException{
+		int index = Collections.binarySearch(contracts, 
+				new Contract(name,gender,email,phones));		
 		if(index <0)
 			return false;
-		contracts[index].setGender(gender);
-		contracts[index].setEmail(email);
-		contracts[index].setPhones(phones);
+		contracts.get(index).setGender(gender);
+		contracts.get(index).setEmail(email);
+		contracts.get(index).setPhones(phones);
 		return true;
 	}
 	public void clearContracts() {
-		contracts = null;
+		contracts.clear();
 	}
-	public boolean deleteVal(Contract c){
-		int index = findContract(c);
-		if(index == -1)
-			return false;
-		//删除第index个元素
-		Contract[] contractDeleted = new Contract[contracts.length-1];		
-		System.arraycopy(contracts, 0, contractDeleted, 0, index);
-		System.arraycopy(contracts, index+1, 
-				contractDeleted, index, contracts.length-1-index);
-		contracts = contractDeleted;		
-		return true;
-	}
-	public boolean deleteRef(Contract c){
-		int index = -1;
-		for(int i = 0; i < contracts.length; i++){
-			if(contracts[i] == c){
-				index = i;
-				break;
-			}
-		}
-		if(index == -1)
-			return false;
-		//删除第index个元素
-		Contract[] contractDeleted = new Contract[contracts.length-1];		
-		System.arraycopy(contracts, 0, contractDeleted, 0, index);
-		System.arraycopy(contracts, index+1, 
-				contractDeleted, index, contracts.length-1-index);
-		contracts = contractDeleted;		
-		return true;
-	}
+	public boolean delete(Contract c){
+		return contracts.remove(c);			
+	}	
 }
 
 

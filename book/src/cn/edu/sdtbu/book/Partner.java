@@ -1,9 +1,12 @@
 package cn.edu.sdtbu.book;
+
+import java.util.List;
+
 public class Partner extends Contract {
 	private String title;
 	private Company company;
 	public Partner(String name, String gender, String email,
-			String[] phones,String title, Company company) {
+			List<String> phones,String title, Company company) {
 		super(name, gender, email, phones);
 		this.setTitle(title);
 		this.setCompany(company);
@@ -26,9 +29,9 @@ public class Partner extends Contract {
 		System.out.println("Company:\n"+this.getCompany());
 	}
 	public static void main(String[] args) {
-		Partner p = new Partner("李昭","男","LiZ@163.com",
+		/*Partner p = new Partner("李昭","男","LiZ@163.com",
 				new String[]{"123456768"},"经理",
 				new Company("华阳热力","山东烟台","1111","2222"));
-		p.display();
+		p.display();*/
 	}
 }
