@@ -1,5 +1,8 @@
-package cn.edu.sdtbu.book;
+package cn.edu.sdtbu.book.service;
 import java.util.*;
+
+import cn.edu.sdtbu.book.bean.Contract;
+import cn.edu.sdtbu.book.bean.GenderException;
 public class Book {
 	private List<Contract> contracts;
 	

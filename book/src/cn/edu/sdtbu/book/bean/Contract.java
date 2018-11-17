@@ -1,21 +1,15 @@
-package cn.edu.sdtbu.book;
+package cn.edu.sdtbu.book.bean;
 import java.text.*;
 import java.util.*;
-class NameException extends Exception{
-	public NameException(){
-		super("姓名为空");
-	}
-}
-class GenderException extends Exception{
-	public GenderException(){
-		super("性别错误");
-	}
-}
 public class Contract extends Object implements Comparable<Contract>{
 	private String name;
 	private String gender;
 	private String email;
-	private List<String> phones;	
+	private List<String> phones;		
+	
+	public String toString(){
+		return name;
+	}
 	public boolean equals(Object o){
 		if(this == o)
 			return true;

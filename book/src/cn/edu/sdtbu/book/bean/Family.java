@@ -1,4 +1,4 @@
-package cn.edu.sdtbu.book;
+package cn.edu.sdtbu.book.bean;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

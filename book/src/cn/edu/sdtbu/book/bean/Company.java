@@ -1,4 +1,4 @@
-package cn.edu.sdtbu.book;
+package cn.edu.sdtbu.book.bean;
 public class Company {
 	private String name;
 	private String address;
