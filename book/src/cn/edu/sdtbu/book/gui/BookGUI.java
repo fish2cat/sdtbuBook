@@ -5,24 +5,13 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
-import cn.edu.sdtbu.book.bean.Company;
-import cn.edu.sdtbu.book.bean.Contract;
-import cn.edu.sdtbu.book.bean.Family;
-import cn.edu.sdtbu.book.bean.Partner;
+import java.text.*;
+import java.util.*;
+import javax.swing.*;
+import cn.edu.sdtbu.book.bean.*;
 import cn.edu.sdtbu.book.gui.customStyle.*;
 import cn.edu.sdtbu.book.service.Book;
+
 
 
 
@@ -31,6 +20,7 @@ public class BookGUI extends JFrame {
 	private TextFieldFont tfdSearch;
 	private DefaultListModel<Contract> listModel;
 	private Book bookService;
+	private Contract currentContract;
 	{
 		Vector<Contract> c = new Vector<Contract>();
 		
@@ -108,6 +98,20 @@ public class BookGUI extends JFrame {
 				StyleArgument.FONTSIZE);
 		tfdSearch = new TextFieldFont("搜索",20,f);
 		ButtonFont btnAdd = new ButtonFont("+",f);
+		btnAdd.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				setCurrentContract(null);
+				new ContractDetailGUI(BookGUI.this);
+				/*Contract c = getCurrentContract();
+				if(c != null) {
+				phoneService.add(c);
+				//要求按照姓名排序，不能直接listModel.addElement()方法
+				PhoneBookGUI.this.freshListModel(phoneService.getContracts());
+				*/
+			}
+			
+		});
 		ButtonFont btnDel = new ButtonFont("-",f);
 		tfdSearch.addActionListener(new ActionListener() {
 			@Override
@@ -160,7 +164,12 @@ public class BookGUI extends JFrame {
 			listModel.addElement(p);
 		}
 	}
-
+	public Contract getCurrentContract() {
+		return currentContract;
+	}
+	public void setCurrentContract(Contract c) {
+		currentContract = c;
+	}
 	
 public static void main(String[] args) {
 	new BookGUI();
