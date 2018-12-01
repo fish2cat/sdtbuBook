@@ -21,9 +21,9 @@ public class Family extends Contract {
 		f.display();*/
 	}
 	
-	public Family(String name, String gender, String email,
+	public Family(int id,String name, String gender, String email,
 			List<String> phones, Date birth, String addr) {
-		super(name, gender, email, phones);
+		super(id,name, gender, email, phones);
 		this.setBirthday(birth);
 		this.setAddress(addr);
 	}

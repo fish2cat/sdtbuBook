@@ -2,10 +2,11 @@ package cn.edu.sdtbu.book.bean;
 import java.text.*;
 import java.util.*;
 public class Contract extends Object implements Comparable<Contract>{
+	private int id;
 	private String name;
 	private String gender;
 	private String email;
-	private List<String> phones;		
+	private List<String> phones;	
 	
 	public String toString(){
 		return name;
@@ -41,10 +42,11 @@ public class Contract extends Object implements Comparable<Contract>{
 	public Contract(){		
 	}	
 	public Contract(String name, List<String> phones){
-		this(name,"","",phones);
+		this(0,name,"","",phones);
 	}
-	public Contract(String name, String gender, String email, List<String> phones){
+	public Contract(int id,String name, String gender, String email, List<String> phones){
 		super();
+		this.setId(id);
 		try {
 			this.setName(name);
 			this.setGender(gender);
@@ -66,7 +68,7 @@ public class Contract extends Object implements Comparable<Contract>{
 		System.out.println();
 	}
 	public static void main(String[] args) throws Exception{
-		List<String> phones = new ArrayList<String>();
+		/*List<String> phones = new ArrayList<String>();
 		phones.add("13212341111");
 		phones.add("12345678901");		
 		Contract c = new Contract("李明","","Li@163.com",phones);
@@ -76,7 +78,7 @@ public class Contract extends Object implements Comparable<Contract>{
 		p.add("13212341112");
 		Contract c1 = new Contract("李明","男","Li@163.com",p);
 		c.mergeContract(c1);
-		c.display();
+		c.display();*/
 	}	
 	public String getName() {
 		return name;
@@ -107,6 +109,12 @@ public class Contract extends Object implements Comparable<Contract>{
 	}
 	public void setPhones(List<String> phones) {
 		this.phones = phones;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

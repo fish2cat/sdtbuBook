@@ -5,9 +5,9 @@ import java.util.List;
 public class Partner extends Contract {
 	private String title;
 	private Company company;
-	public Partner(String name, String gender, String email,
+	public Partner(int id,String name, String gender, String email,
 			List<String> phones,String title, Company company) {
-		super(name, gender, email, phones);
+		super(id,name, gender, email, phones);
 		this.setTitle(title);
 		this.setCompany(company);
 	}	
